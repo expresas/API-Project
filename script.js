@@ -1,0 +1,218 @@
+console.log('Labas')
+
+// https://jsonplaceholder.typicode.com/posts?_limit=3&_start=4
+// https://jsonplaceholder.typicode.com/
+// posts/10/comments
+// pavadinimas - post title
+// pastraipa - post body
+
+// 1. Sukurti puslapį, kuriame bus atvaizduojami įrašai (posts). Kiekvienas įrašas turi:
+// 1.1. Pavadinimą.
+// 1.2. Pastraipą su įrašo (post) turiniu.
+// 1.3. Autorių. Tai turi būti nuoroda. Kol kas ji gali niekur nevesti.
+// 2. Po kiekvienu įrašu (post) gali būti komentarų (sukurti variantus įrašui, kuris neturi komentarų, kuris turi vieną komentarą ir kuris turi daugiau nei vieną komentarą). Kiekvienas komentaras turi:
+// 2.1. Komentaro pavadinimą.
+// 2.2. Komentaro turinį - pastraipą.
+// 2.3. Komentarą parašiusio asmens el. pašto adresą.
+
+// 3. Sukurti naują puslapį user.html, kuriame bus atvaizduojama vartotojo informacija:
+// 3.1. Pilnas vardas.
+// 3.2. Vartotojo vardas / nick'as.
+// 3.3. El. paštas.
+// 3.4. Adresas, kuris turės gatvę, namo numerį, miestą, pašto kodą. Paspaudus ant adreso, pagal koordinates, turėtų atidaryti šios vietos Google Maps. Kol kas naudoti bet kokią Google Map vietovę.
+// 3.5. Telefono numeris.
+// 3.6. Internetinio puslapio adresas.
+// 3.7. Įmonės, kurioje dirba, pavadinimas.
+
+// 4. Šiame puslapyje turės būti atvaizduojama:
+// 4.1. Visi vartotojo parašyti įrašai (posts). Post'ų įrašuose nereikia atvaizduoti komentarų. Kiekvienas post'as turi turėti nuorodą.
+// 4.2. Visi vartotojo sukurti foto albumai. Kiekvienas albumas turės:
+// 4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.
+
+// 5. Pagrindiniame puslapyje (index.html) pridėti skiltį, kurioje atvaizduojamas albumų sąrašas. Kiekvienas albumas turės:
+// 5.1. Pavadinimą, o paspaudus ant jo - nukreipiama į albumą (album.html).
+// 5.2. Albumo autoriaus vardą.
+// 5.3. Nuotrauką.
+
+// 6. Sukurti naują puslapį album.html ir jame atvaizduoti:
+// 6.1. Albumo pavadinimą.
+// 6.2. Album autoriaus vardą. Paspaudus ant vardo - nukreipiama į autoriaus puslapį.
+// 6.3. Skiltis, kurioje atvaizduojamos visos albumo nuotraukos. Panaudoti library (biblioteką), kuri skirta gražiam galerijos atvaizdavimui, pvz.:
+// 6.3.1. https://photoswipe.com/
+// 6.3.2. https://nanogallery2.nanostudio.org/
+// 6.3.3. https://sachinchoolur.github.io/lightgallery.js/
+// 6.3.4. Arba bet kurią kitą.
+
+function capitalizeFirstLetter(string) {
+  return string.at(0).toUpperCase() + string.slice(1)
+}
+
+let pageWrapper = document.createElement('div')
+pageWrapper.classList.add('pageWrapper')
+document.body.prepend(pageWrapper)
+
+fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
+// fetch(`https://jsonplaceholder.typicode.com/posts`)
+.then(res => res.json())
+.then(posts => {
+  let postsWrapper = document.createElement('div')
+  postsWrapper.classList.add('postsWrapper')
+  pageWrapper.append(postsWrapper);
+
+  posts.map(post => {
+    let title = post.title
+    let body = capitalizeFirstLetter(post.body)
+    let id = post.id
+    let userId = post.userId
+    let postElement = document.createElement('div')
+    postElement.classList.add('onePost')
+    postsWrapper.prepend(postElement)
+    let titleElement = document.createElement('h1')
+    // titleElement.textContent = title.toUpperCase();
+    titleElement.textContent = capitalizeFirstLetter(title)
+    let authorElement = document.createElement('div')
+    fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    .then(res => res.json())
+    .then(author => {
+      // console.log(author.name)
+      authorElement.innerHTML = `<p><span>Author: </span><a href="./user.html?userId=${userId}">${author.name}</a></p>`
+    })
+      
+    let bodyElement = document.createElement('p')
+    bodyElement.textContent = body;
+
+    let commentsButton = document.createElement('input')
+    commentsButton.setAttribute('type', 'button')
+    commentsButton.setAttribute('value', 'Show comments')
+    
+
+    let commentsElement = document.createElement('div')
+    commentsElement.classList.add('allComments')
+    // commentsElement.classList.add('allComments', 'hidden')
+    commentsElement.style.visibility = 'hidden';
+    commentsElement.style.opacity = '0';
+    commentsElement.style.height = '0';
+    postElement.append(titleElement, authorElement, bodyElement, commentsButton, commentsElement)
+    let commentsElementHeading = document.createElement('h2')
+    commentsElementHeading.textContent = 'Comments'
+    commentsElement.append(commentsElementHeading)
+
+    /////////////////////////////////////
+
+    commentsButton.addEventListener('click', event =>{
+      if (event.target.value === 'Show comments') {
+        event.target.value = 'Hide comments'
+      } else if (event.target.value === 'Hide comments') {
+        event.target.value = 'Show comments'
+      }
+      // commentsElement.classList.toggle('hidden')
+      console.dir(commentsElement.clientHeight)
+      console.dir(event.target.nextElementSibling.childNodes)
+      ///////////////////////////////////////////////////////// test
+      let height = 0;
+      event.target.nextElementSibling.childNodes.forEach(element => {
+        // console.dir(element.clientHeight)
+        height += element.clientHeight;
+      });
+      console.log('height', height)
+
+      if (commentsElement.style.visibility === 'hidden') {
+        commentsElement.style.visibility = 'visible'
+        commentsElement.style.opacity = '1'
+        commentsElement.style.height = height + 40 + 32 + 'px' //40px heading marginas, 32px - 4 elementu marginas (8px*4) = reikia tobulinti, surišti su komentaru skaičiumi
+      }
+      else {
+        commentsElement.style.visibility = 'hidden'
+        commentsElement.style.opacity = '0'
+        commentsElement.style.height = '0'
+      }
+
+      // console.dir(commentsElement)
+      ///////////////////////
+    })
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
+    .then(res => res.json())
+    .then(coments => {
+      coments.map(comment => {
+        let oneCommentElement = document.createElement('div')
+        oneCommentElement.classList.add('oneComment')
+        commentsElement.append(oneCommentElement)
+        let oneCommentElementTitle = document.createElement('h4')
+        let oneCommentElementBody = document.createElement('p')
+        let oneCommentElementEmail = document.createElement('p')
+        oneCommentElement.append(oneCommentElementTitle, oneCommentElementBody, oneCommentElementEmail)
+
+        oneCommentElementTitle.textContent = capitalizeFirstLetter(comment.name)
+        oneCommentElementBody.textContent = `"${capitalizeFirstLetter(comment.body)}."`
+        oneCommentElementEmail.innerHTML = `<span>Commented by:</span> ${comment.email}`
+        })
+      })
+    }) ///posts.map pabaiga
+      
+    fetch(`https://jsonplaceholder.typicode.com/albums?_limit=20`)
+    .then(res => res.json())
+    .then(albums => {
+      let albumsWrapper = document.createElement('div')
+      albumsWrapper.classList.add('albumsWrapper')
+      pageWrapper.append(albumsWrapper)
+    
+      albums.map(album => {
+        let albumId = album.id
+        let albumTitle = album.title
+        let userId = album.userId
+    
+        let oneAlbum = document.createElement('div')
+        oneAlbum.classList.add('oneAlbum')
+        albumsWrapper.append(oneAlbum)
+    
+        let albumTitleElement = document.createElement('h3')
+        let albumAuthorElement = document.createElement('p')
+        let albumPhotoElement = document.createElement('div')
+        oneAlbum.append(albumTitleElement, albumAuthorElement, albumPhotoElement)
+        
+        albumTitleElement.innerHTML = `<a href="./album.html?albumId=${albumId}">${capitalizeFirstLetter(albumTitle)}</a>`
+    
+        fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+        .then(res => res.json())
+        .then(author => {
+          // console.log(author.name)
+          albumAuthorElement.innerHTML = `<span>Album author: </span>${author.name}`
+        })
+        
+        fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
+        .then(res => res.json())
+        .then(albums => {
+          console.log(albums[0].thumbnailUrl)
+          albumPhotoElement.innerHTML = `<img src="${albums[0].thumbnailUrl}" alt="">`
+          // albumPhotoElement.innerHTML = `<img src="${albums[0].url}" alt="">`
+          // albumAuthorElement.textContent = author.name
+          console.log(albums[0])
+        })
+    
+      })
+    })
+}).catch(error => {
+  let errorMessage = document.createElement('h1')
+  errorMessage.textContent = 'Klaida!'
+  document.body.append(errorMessage)
+})
+
+// suskleidžiame komentarus(jei jie išskleisti), nes pakeitus lango dydį nebeatitinka komentarų divo aukštis
+window.addEventListener('resize', hideComments)
+function hideComments() {
+  let buttons = document.querySelector('.postsWrapper').querySelectorAll('input[type=button]')
+  buttons.forEach(button => {
+    if (button.value === 'Hide comments') {
+      button.value = 'Show comments'
+      button.nextElementSibling.style.visibility = 'hidden'
+      button.nextElementSibling.style.opacity = '0'
+      button.nextElementSibling.style.height = '0'
+    }
+  })
+}
+  
+
+
+
+

@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: rgb(105, 30, 30);
+}
+
+.albumWrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.albumInfo {
+  text-align: center;
+  padding: 0.5rem;
+  /* border: 1px solid rgb(135, 74, 0); */
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-color: bisque;
+  -webkit-box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.25); 
+  box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.25);
+}
+
+.albumInfo div {
+  padding: 0.25rem;
+}
+
+.albumInfo h1 {
+  margin: 0.75rem;
+  color: rgb(105, 30, 30);
+}
+
+
+.pswp-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* justify-content: space-between; */
+  gap: 1rem;
+}
+
+
+
+
+.pswp__custom-caption {
+  background: rgba(225, 225, 225, 0.25);
+  font-size: 1.5rem;
+  color: #fff;
+  width: calc(100% - 32px);
+  max-width: 400px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+}
+.pswp__custom-caption a {
+  color: #fff;
+  text-decoration: underline;
+}
+.hidden-caption-content {
+  display: none;
+}

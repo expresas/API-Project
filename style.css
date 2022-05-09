@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: rgb(105, 30, 30);
+}
+
+img {
+  border-radius: 1rem;
+}
+
+.pageWrapper {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.onePost,
+.oneAlbum {
+  padding: 0.75rem;
+  /* border: 1px solid black; */
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-color: bisque;
+  -webkit-box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.35); 
+  box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.35);
+  
+}
+
+.onePost:hover,
+.oneAlbum:hover {
+  -webkit-box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15); 
+  box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15);
+}
+
+
+.onePost span,
+.oneAlbum span {
+  font-weight: bold;
+}
+
+.onePost h1 {
+  color: rgb(105, 30, 30);
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.onePost h1,
+.onePost h2 {
+  color: rgb(105, 30, 30);
+}
+
+.oneComment {
+  background-color: whitesmoke;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.oneComment h4,
+.oneComment p {
+  margin: 0.25rem;
+}
+
+.oneComment p:first-of-type {
+  font-style: italic;
+  padding-left: 1rem;
+}
+
+.oneComment p:nth-of-type(2) {
+  text-align: right;
+}
+
+.oneComment:nth-of-type(2n) {
+  margin-right: 1.5rem;
+}
+
+.oneComment:nth-of-type(2n+1) {
+  margin-left: 1.5rem;
+}
+
+.allComments {
+  visibility: hidden;
+
+  /* box-sizing: border-box; */
+  overflow: hidden;
+
+  /* font-weight: bold; */
+  transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 1s ease-out;
+
+  /* visibility: visible;
+  opacity: 1;
+  max-height: 600px;
+  transition: visibility 0s, opacity 0.3s, max-height 0.6s linear; */
+}
+
+/* .allComments.hidden { */
+  /* display: none; */
+  /* visibility: hidden; */
+  /* opacity: 0;
+  max-height: 0px;
+  transition: max-height 0.3s, opacity 0.3s, visibility 0.3s linear; */
+/* } */
+
+input[type=button] { 
+  padding: 8px;
+  color: whitesmoke;
+  background-color: rgb(105, 30, 30);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 8px 15px rgba(105, 30, 30, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  /* rgb(105, 30, 30); */
+  }
+
+  input[type=button]:hover {
+  background-color: whitesmoke;
+  box-shadow: 0px 15px 20px rgba(105, 30, 30, 0.4);
+  color: rgb(105, 30, 30);
+  transform: translateX(3px);
+}
