@@ -16,7 +16,7 @@ const ALBUMID = urlParams.get('albumId')
 // document.location.search = '';
 // history.replaceState({}, null, "/album.html");
 
-console.log(ALBUMID)
+// console.log(ALBUMID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -61,6 +61,7 @@ fetch(`https://jsonplaceholder.typicode.com/albums/${ALBUMID}`)
 }).catch(error => {
   albumWrapper.remove()
   let errorMessage = document.createElement('h1')
+  errorMessage.style.color = 'white'
   errorMessage.textContent = 'Tokio albumo nėra!'
   document.body.append(errorMessage)
 })

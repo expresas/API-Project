@@ -106,15 +106,15 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
         event.target.value = 'Show comments'
       }
       // commentsElement.classList.toggle('hidden')
-      console.dir(commentsElement.clientHeight)
-      console.dir(event.target.nextElementSibling.childNodes)
+      // console.dir(commentsElement.clientHeight)
+      // console.dir(event.target.nextElementSibling.childNodes)
       ///////////////////////////////////////////////////////// test
       let height = 0;
       event.target.nextElementSibling.childNodes.forEach(element => {
         // console.dir(element.clientHeight)
         height += element.clientHeight;
       });
-      console.log('height', height)
+      // console.log('height', height)
 
       if (commentsElement.style.visibility === 'hidden') {
         commentsElement.style.visibility = 'visible'
@@ -183,17 +183,18 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
         fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
         .then(res => res.json())
         .then(albums => {
-          console.log(albums[0].thumbnailUrl)
+          // console.log(albums[0].thumbnailUrl)
           albumPhotoElement.innerHTML = `<img src="${albums[0].thumbnailUrl}" alt="">`
           // albumPhotoElement.innerHTML = `<img src="${albums[0].url}" alt="">`
           // albumAuthorElement.textContent = author.name
-          console.log(albums[0])
+          // console.log(albums[0])
         })
     
       })
     })
 }).catch(error => {
   let errorMessage = document.createElement('h1')
+  errorMessage.style.color = 'white'
   errorMessage.textContent = 'Klaida!'
   document.body.append(errorMessage)
 })

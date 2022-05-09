@@ -1,4 +1,4 @@
-console.log('Labas useriau')
+console.log('Labas user')
 
 // 3. Sukurti naują puslapį user.html, kuriame bus atvaizduojama vartotojo informacija:
 // 3.1. Pilnas vardas.
@@ -15,7 +15,7 @@ console.log('Labas useriau')
 // 4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.
 let urlParams = new URLSearchParams(document.location.search);
 const USERID = urlParams.get('userId')
-console.log(USERID)
+// console.log(USERID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -49,7 +49,7 @@ fetch(`https://jsonplaceholder.typicode.com/users/${USERID}`)
   document.body.append(userWrapper)
   userWrapper.append(userInfoElement)
   userInfoElement.append(nameElement, usernameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement)
-  console.log(author)
+  // console.log(author)
     
   fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
   .then(res => res.json())
@@ -93,13 +93,14 @@ fetch(`https://jsonplaceholder.typicode.com/users/${USERID}`)
         let userAlbumTitle = document.createElement('h4')
         userAlbumElement.append(userAlbumTitle)
         userAlbumTitle.innerHTML = `<a href="./album.html?albumId=${album.id}">${capitalizeFirstLetter(album.title)}</a>`
-        console.log(album)
+        // console.log(album)
       })
     })
   })
 }).catch(error => {
   // userWrapper.remove();
   let errorMessage = document.createElement('h1')
+  errorMessage.style.color = 'white'
   errorMessage.textContent = 'Tokio vartotojo nėra!'
   document.body.append(errorMessage)
 })
