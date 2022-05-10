@@ -1,4 +1,4 @@
-console.log('Labas post')
+console.log('Labas posts')
 
 // 7. Sukurti naują puslapį post.html ir jame atvaizduoti:
 // 7.1. Įrašo (post) pavadinimą.
@@ -8,7 +8,7 @@ console.log('Labas post')
 // 7.5. Nuoroda „Kiti autoriaus įrašai", kurią paspaudus bus nukreipiama į naują puslapį. Jame bus atvaizduojami visi šio vartotojo įrašai.
 
 let urlParams = new URLSearchParams(document.location.search)
-const POSTID = urlParams.get('postId')
+const USERID = urlParams.get('userId')
 // console.log(POSTID)
 
 function capitalizeFirstLetter(string) {
@@ -19,17 +19,18 @@ let pageWrapper = document.createElement('div')
 pageWrapper.classList.add('pageWrapper')
 document.body.prepend(pageWrapper)
 
-fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
+fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
+// fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
 // fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
 // fetch(`https://jsonplaceholder.typicode.com/posts`)
 .then(res => res.json())
-.then(post => {
-  console.log(post)
+.then(posts => {
+  console.log(posts)
   let postsWrapper = document.createElement('div')
   postsWrapper.classList.add('postsWrapper')
   pageWrapper.append(postsWrapper);
 
-  // posts.map(post => {
+  posts.map(post => {
     let title = post.title
     let body = `${capitalizeFirstLetter(post.body)}.`
     let id = post.id
@@ -45,7 +46,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
     .then(res => res.json())
     .then(author => {
       // console.log(author.name)
-      authorElement.innerHTML = `<p><span>Author: </span><a href="./user.html?userId=${userId}">${author.name}</a> / <span>All ${author.name} posts listed </span><a href="./posts.html?userId=${userId}">here</a></p>`
+      authorElement.innerHTML = `<p><span>Author: </span><a href="./user.html?userId=${userId}">${author.name}</a>`
     })
       
     let bodyElement = document.createElement('p')
@@ -117,7 +118,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
         oneCommentElementEmail.innerHTML = `<span>Commented by:</span> ${comment.email}`
         })
       })
-    // }) ///posts.map pabaiga
+    }) ///posts.map pabaiga
       
     // fetch(`https://jsonplaceholder.typicode.com/albums?_limit=20`)
     // .then(res => res.json())
