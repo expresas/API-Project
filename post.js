@@ -1,47 +1,4 @@
-console.log('Labas')
-
-// https://jsonplaceholder.typicode.com/posts?_limit=3&_start=4
-// https://jsonplaceholder.typicode.com/
-// posts/10/comments
-// pavadinimas - post title
-// pastraipa - post body
-
-// 1. Sukurti puslapį, kuriame bus atvaizduojami įrašai (posts). Kiekvienas įrašas turi:
-// 1.1. Pavadinimą.
-// 1.2. Pastraipą su įrašo (post) turiniu.
-// 1.3. Autorių. Tai turi būti nuoroda. Kol kas ji gali niekur nevesti.
-// 2. Po kiekvienu įrašu (post) gali būti komentarų (sukurti variantus įrašui, kuris neturi komentarų, kuris turi vieną komentarą ir kuris turi daugiau nei vieną komentarą). Kiekvienas komentaras turi:
-// 2.1. Komentaro pavadinimą.
-// 2.2. Komentaro turinį - pastraipą.
-// 2.3. Komentarą parašiusio asmens el. pašto adresą.
-
-// 3. Sukurti naują puslapį user.html, kuriame bus atvaizduojama vartotojo informacija:
-// 3.1. Pilnas vardas.
-// 3.2. Vartotojo vardas / nick'as.
-// 3.3. El. paštas.
-// 3.4. Adresas, kuris turės gatvę, namo numerį, miestą, pašto kodą. Paspaudus ant adreso, pagal koordinates, turėtų atidaryti šios vietos Google Maps. Kol kas naudoti bet kokią Google Map vietovę.
-// 3.5. Telefono numeris.
-// 3.6. Internetinio puslapio adresas.
-// 3.7. Įmonės, kurioje dirba, pavadinimas.
-
-// 4. Šiame puslapyje turės būti atvaizduojama:
-// 4.1. Visi vartotojo parašyti įrašai (posts). Post'ų įrašuose nereikia atvaizduoti komentarų. Kiekvienas post'as turi turėti nuorodą.
-// 4.2. Visi vartotojo sukurti foto albumai. Kiekvienas albumas turės:
-// 4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.
-
-// 5. Pagrindiniame puslapyje (index.html) pridėti skiltį, kurioje atvaizduojamas albumų sąrašas. Kiekvienas albumas turės:
-// 5.1. Pavadinimą, o paspaudus ant jo - nukreipiama į albumą (album.html).
-// 5.2. Albumo autoriaus vardą.
-// 5.3. Nuotrauką.
-
-// 6. Sukurti naują puslapį album.html ir jame atvaizduoti:
-// 6.1. Albumo pavadinimą.
-// 6.2. Album autoriaus vardą. Paspaudus ant vardo - nukreipiama į autoriaus puslapį.
-// 6.3. Skiltis, kurioje atvaizduojamos visos albumo nuotraukos. Panaudoti library (biblioteką), kuri skirta gražiam galerijos atvaizdavimui, pvz.:
-// 6.3.1. https://photoswipe.com/
-// 6.3.2. https://nanogallery2.nanostudio.org/
-// 6.3.3. https://sachinchoolur.github.io/lightgallery.js/
-// 6.3.4. Arba bet kurią kitą.
+console.log('Labas posts')
 
 // 7. Sukurti naują puslapį post.html ir jame atvaizduoti:
 // 7.1. Įrašo (post) pavadinimą.
@@ -49,6 +6,10 @@ console.log('Labas')
 // 7.3. Įrašo turinį.
 // 7.4. Įrašo komentarus. Komentarai turi būti atvaizduojami tokiu pačiu principu kaip ir pagrindiniame puslapyje.
 // 7.5. Nuoroda „Kiti autoriaus įrašai", kurią paspaudus bus nukreipiama į naują puslapį. Jame bus atvaizduojami visi šio vartotojo įrašai.
+
+let urlParams = new URLSearchParams(document.location.search)
+const POSTID = urlParams.get('postId')
+console.log(POSTID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -58,17 +19,19 @@ let pageWrapper = document.createElement('div')
 pageWrapper.classList.add('pageWrapper')
 document.body.prepend(pageWrapper)
 
-fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
+fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
+// fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
 // fetch(`https://jsonplaceholder.typicode.com/posts`)
 .then(res => res.json())
-.then(posts => {
+.then(post => {
+  console.log(post)
   let postsWrapper = document.createElement('div')
   postsWrapper.classList.add('postsWrapper')
   pageWrapper.append(postsWrapper);
 
-  posts.map(post => {
+  // posts.map(post => {
     let title = post.title
-    let body = capitalizeFirstLetter(post.body)
+    let body = `${capitalizeFirstLetter(post.body)}.`
     let id = post.id
     let userId = post.userId
     let postElement = document.createElement('div')
@@ -82,16 +45,15 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
     .then(res => res.json())
     .then(author => {
       // console.log(author.name)
-      authorElement.innerHTML = `<p><span>Author: </span><a href="./user.html?userId=${userId}">${author.name}</a></p>`
+      authorElement.innerHTML = `<p><span>Author: </span><a href="./user.html?userId=${userId}">${author.name}</a> / <span>All ${author.name} posts listed </span><a href="./posts.html?userId=${userId}">here</a></p>`
     })
       
     let bodyElement = document.createElement('p')
-    bodyElement.textContent = body;
+    bodyElement.textContent = `${body} ${body} ${body} ${body}`
 
     let commentsButton = document.createElement('input')
     commentsButton.setAttribute('type', 'button')
     commentsButton.setAttribute('value', 'Show comments')
-    
 
     let commentsElement = document.createElement('div')
     commentsElement.classList.add('allComments')
@@ -155,54 +117,54 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
         oneCommentElementEmail.innerHTML = `<span>Commented by:</span> ${comment.email}`
         })
       })
-    }) ///posts.map pabaiga
+    // }) ///posts.map pabaiga
       
-    fetch(`https://jsonplaceholder.typicode.com/albums?_limit=20`)
-    .then(res => res.json())
-    .then(albums => {
-      let albumsWrapper = document.createElement('div')
-      albumsWrapper.classList.add('albumsWrapper')
-      pageWrapper.append(albumsWrapper)
+    // fetch(`https://jsonplaceholder.typicode.com/albums?_limit=20`)
+    // .then(res => res.json())
+    // .then(albums => {
+    //   let albumsWrapper = document.createElement('div')
+    //   albumsWrapper.classList.add('albumsWrapper')
+    //   pageWrapper.append(albumsWrapper)
     
-      albums.map(album => {
-        let albumId = album.id
-        let albumTitle = album.title
-        let userId = album.userId
+    //   albums.map(album => {
+    //     let albumId = album.id
+    //     let albumTitle = album.title
+    //     let userId = album.userId
     
-        let oneAlbum = document.createElement('div')
-        oneAlbum.classList.add('oneAlbum')
-        albumsWrapper.append(oneAlbum)
+    //     let oneAlbum = document.createElement('div')
+    //     oneAlbum.classList.add('oneAlbum')
+    //     albumsWrapper.append(oneAlbum)
     
-        let albumTitleElement = document.createElement('h3')
-        let albumAuthorElement = document.createElement('p')
-        let albumPhotoElement = document.createElement('div')
-        oneAlbum.append(albumTitleElement, albumAuthorElement, albumPhotoElement)
+    //     let albumTitleElement = document.createElement('h3')
+    //     let albumAuthorElement = document.createElement('p')
+    //     let albumPhotoElement = document.createElement('div')
+    //     oneAlbum.append(albumTitleElement, albumAuthorElement, albumPhotoElement)
         
-        albumTitleElement.innerHTML = `<a href="./album.html?albumId=${albumId}">${capitalizeFirstLetter(albumTitle)}</a>`
+    //     albumTitleElement.innerHTML = `<a href="./album.html?albumId=${albumId}">${capitalizeFirstLetter(albumTitle)}</a>`
     
-        fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
-        .then(res => res.json())
-        .then(author => {
-          // console.log(author.name)
-          albumAuthorElement.innerHTML = `<span>Album author: </span>${author.name}`
-        })
+    //     fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    //     .then(res => res.json())
+    //     .then(author => {
+    //       // console.log(author.name)
+    //       albumAuthorElement.innerHTML = `<span>Album author: </span>${author.name}`
+    //     })
         
-        fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
-        .then(res => res.json())
-        .then(albums => {
-          // console.log(albums[0].thumbnailUrl)
-          albumPhotoElement.innerHTML = `<img src="${albums[0].thumbnailUrl}" alt="">`
-          // albumPhotoElement.innerHTML = `<img src="${albums[0].url}" alt="">`
-          // albumAuthorElement.textContent = author.name
-          // console.log(albums[0])
-        })
+    //     fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
+    //     .then(res => res.json())
+    //     .then(albums => {
+    //       // console.log(albums[0].thumbnailUrl)
+    //       albumPhotoElement.innerHTML = `<img src="${albums[0].thumbnailUrl}" alt="">`
+    //       // albumPhotoElement.innerHTML = `<img src="${albums[0].url}" alt="">`
+    //       // albumAuthorElement.textContent = author.name
+    //       // console.log(albums[0])
+    //     })
     
-      })
-    })
+    //   })
+    // })
 }).catch(error => {
   let errorMessage = document.createElement('h1')
   errorMessage.style.color = 'white'
-  errorMessage.textContent = 'Klaida!'
+  errorMessage.textContent = 'Nėra tokio įrašo!'
   document.body.append(errorMessage)
 })
 
@@ -219,8 +181,3 @@ function hideComments() {
     }
   })
 }
-  
-
-
-
-

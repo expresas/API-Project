@@ -11,7 +11,7 @@ console.log('Labas')
 
 ///////////////////////////
 
-let urlParams = new URLSearchParams(document.location.search);
+let urlParams = new URLSearchParams(document.location.search)
 const ALBUMID = urlParams.get('albumId')
 // document.location.search = '';
 // history.replaceState({}, null, "/album.html");
