@@ -9,7 +9,7 @@ console.log('Labas posts')
 
 let urlParams = new URLSearchParams(document.location.search)
 const POSTID = urlParams.get('postId')
-console.log(POSTID)
+// console.log(POSTID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
