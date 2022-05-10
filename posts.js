@@ -9,7 +9,7 @@ console.log('Labas posts')
 
 let urlParams = new URLSearchParams(document.location.search)
 const USERID = urlParams.get('userId')
-// console.log(POSTID)
+console.log(USERID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -19,13 +19,22 @@ let pageWrapper = document.createElement('div')
 pageWrapper.classList.add('pageWrapper')
 document.body.prepend(pageWrapper)
 
-fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
+let url = ``
+if (USERID) {
+  url = `https://jsonplaceholder.typicode.com/users/${USERID}/posts`
+} else {
+  url = `https://jsonplaceholder.typicode.com/posts`
+}
+
+fetch(url)
+// fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
 // fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
 // fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
 // fetch(`https://jsonplaceholder.typicode.com/posts`)
 .then(res => res.json())
 .then(posts => {
-  console.log(posts)
+  console.dir(posts)
+  if (posts.length === 0) return error
   let postsWrapper = document.createElement('div')
   postsWrapper.classList.add('postsWrapper')
   pageWrapper.append(postsWrapper);
@@ -163,9 +172,10 @@ fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
     //   })
     // })
 }).catch(error => {
+  // pageWrapper.remove()
   let errorMessage = document.createElement('h1')
   errorMessage.style.color = 'white'
-  errorMessage.textContent = 'Nėra tokio įrašo!'
+  errorMessage.textContent = 'Nėra tokio autoriaus!'
   document.body.append(errorMessage)
 })
 

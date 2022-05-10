@@ -50,6 +50,17 @@ console.log('Labas')
 // 7.4. Įrašo komentarus. Komentarai turi būti atvaizduojami tokiu pačiu principu kaip ir pagrindiniame puslapyje.
 // 7.5. Nuoroda „Kiti autoriaus įrašai", kurią paspaudus bus nukreipiama į naują puslapį. Jame bus atvaizduojami visi šio vartotojo įrašai.
 
+// 8. Sukurti vartotojų puslapį (users.html), kuriame būtų atvaizduotas vartotojų sąrašas.
+// 8.1. Prie vartotojo turėtu būti jo vardas ir parašytų post'ų skaičius.
+// 8.2. Paspaudus ant vartotojo - nukreipiama į jo puslapį.
+
+// 9. Tokiu pačiu principu, kaip ir vartotojų puslapį, sukurti puslapį albumams (albums.html).
+// 9.1. Prie kiekvieno albumo turi būti:
+// 9.1.1. Parašytas jo pavadinimas.
+// 9.1.2. Parašytas vartotojo, sukūrusio šį albumą, vardas.
+// 9.1.3. Albume esančių nuotraukų skaičius.
+// 9.1.4. Viena nuotrauka
+
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
 }
@@ -86,7 +97,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
     })
       
     let bodyElement = document.createElement('p')
-    bodyElement.textContent = body;
+    bodyElement.textContent = `${body}.`
 
     let commentsButton = document.createElement('input')
     commentsButton.setAttribute('type', 'button')

@@ -48,6 +48,11 @@ img {
   margin-bottom: 0.25rem;
 }
 
+.onePost > p {
+  text-indent: 2rem;
+  text-align: justify;
+}
+
 .onePost h1,
 .onePost h2 {
   color: rgb(105, 30, 30);
