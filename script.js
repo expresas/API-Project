@@ -99,9 +99,7 @@ let albumsLinkElement = document.createElement('a')
 albumsLinkElement.textContent = 'Albums'
 albumsLinkElement.href = './albums.html'
 
-
 navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
-
 /// nav pabaiga
 
 fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)

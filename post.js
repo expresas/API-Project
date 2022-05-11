@@ -19,6 +19,34 @@ let pageWrapper = document.createElement('div')
 pageWrapper.classList.add('pageWrapper')
 document.body.prepend(pageWrapper)
 
+// navigacija
+let navWrapper = document.createElement('div')
+navWrapper.classList.add('navWrapper')
+document.body.prepend(navWrapper)
+
+let navLeftElement = document.createElement('div')
+navLeftElement.classList.add('navLeft')
+let navRightElement = document.createElement('div')
+navRightElement.classList.add('navRight')
+navWrapper.append(navLeftElement, navRightElement)
+let homeLinkElement = document.createElement('a')
+homeLinkElement.textContent = 'Home'
+homeLinkElement.href = './'
+navLeftElement.append(homeLinkElement)
+
+let authorsLinkElement = document.createElement('a')
+authorsLinkElement.textContent = 'Authors'
+authorsLinkElement.href = './users.html'
+let postsLinkElement = document.createElement('a')
+postsLinkElement.textContent = 'Posts'
+postsLinkElement.href = './posts.html'
+let albumsLinkElement = document.createElement('a')
+albumsLinkElement.textContent = 'Albums'
+albumsLinkElement.href = './albums.html'
+
+navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
+/// nav pabaiga
+
 fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
 // fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
 // fetch(`https://jsonplaceholder.typicode.com/posts`)
