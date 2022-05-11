@@ -180,14 +180,6 @@ span {
   transition: visibility 0s, opacity 0.3s, max-height 0.6s linear; */
 }
 
-/* .allComments.hidden { */
-  /* display: none; */
-  /* visibility: hidden; */
-  /* opacity: 0;
-  max-height: 0px;
-  transition: max-height 0.3s, opacity 0.3s, visibility 0.3s linear; */
-/* } */
-
 input[type=button] { 
   padding: 8px;
   color: whitesmoke;

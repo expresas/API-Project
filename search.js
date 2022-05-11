@@ -86,7 +86,6 @@ searchForm.addEventListener('submit', event => {
     document.querySelector('.resultsWrapper').remove()
   }
   showSearchResults(SEARCH)
-
 })
 
 function showSearchResults(text) {
