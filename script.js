@@ -66,6 +66,21 @@ console.log('Labas')
 // 10.2. Users / vartotojų puslapis.
 // 10.3. Albums / albumų puslapis
 
+// 11. Navigacijos elemente sukurti paieškos laukelį (formą ir text input).
+// 12. Formos submit metu, nukreipti į naują puslapį (search.html).
+// 13. Šiame puslapyje atvaizduoti paieškos rezultatą.
+// 13.1. Jeigu nėra tinkamų rezultatų, tai parašyti, jog rezultatų pagal užklausą nerasta.
+// 14. Filtruoti pagal:
+// 14.1. Tikslų vartotojo username.
+// 14.2. Jeigu neranda pagal username, tada pagal tikslų vartotojo pilną vardą.
+// 14.3. Jeigu neranda pagal username arba pagal tikslu vartotojo pilna vardą, tada pagal tikslų vartotojo el. paštą.
+// 14.4. Tikslų post'o pavadinimą.
+// 14.5. Tikslų albumo pavadinimą.
+
+// Papildoma:
+// 15. Search puslapyje turi būti paieškos forma, kuri veikia neperkraunant puslapio.
+// 16. Sukurti filtravimo galimybę iš dalies frazės, o nebūtinai pagal tikslią frazę.
+
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
 }
@@ -81,9 +96,12 @@ document.body.prepend(navWrapper)
 
 let navLeftElement = document.createElement('div')
 navLeftElement.classList.add('navLeft')
+let navCenterElement = document.createElement('div')
+navCenterElement.classList.add('navCenter')
 let navRightElement = document.createElement('div')
 navRightElement.classList.add('navRight')
-navWrapper.append(navLeftElement, navRightElement)
+
+navWrapper.append(navLeftElement, navCenterElement, navRightElement)
 let homeLinkElement = document.createElement('a')
 homeLinkElement.textContent = 'Home'
 homeLinkElement.href = './'
@@ -99,7 +117,15 @@ let albumsLinkElement = document.createElement('a')
 albumsLinkElement.textContent = 'Albums'
 albumsLinkElement.href = './albums.html'
 
-navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
+navCenterElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
+
+let searchDivElement = document.createElement('div')
+navRightElement.append(searchDivElement)
+
+searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
+<input type="text" name="search" id="search">
+<input type="submit" value="Search">
+</form>`
 /// nav pabaiga
 
 fetch(`https://jsonplaceholder.typicode.com/posts?_limit=25`)
