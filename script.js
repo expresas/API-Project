@@ -61,6 +61,11 @@ console.log('Labas')
 // 9.1.3. Albume esančių nuotraukų skaičius.
 // 9.1.4. Viena nuotrauka
 
+// 10. Sukurti navigacijos elementą, kuris nukreips į puslapius:
+// 10.1. Home / pagrindinis puslapis.
+// 10.2. Users / vartotojų puslapis.
+// 10.3. Albums / albumų puslapis
+
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
 }
