@@ -55,7 +55,7 @@ let albumsLinkElement = document.createElement('a')
 albumsLinkElement.textContent = 'Albums'
 albumsLinkElement.href = './albums.html'
 
-navCenterElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
+navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
 
 // let searchDivElement = document.createElement('div')
 // navRightElement.append(searchDivElement)
