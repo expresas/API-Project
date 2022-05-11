@@ -74,7 +74,8 @@ pageWrapper.append(searchDivElement)
 searchDivElement.innerHTML = `<form id="searchForm">
 <label for="search">Search phrase: </label>
 <input type="text" name="search" id="search" required>
-<input type="submit" value="Search">
+<input type="submit" value="Search">&nbsp;&nbsp;
+<label>(e.g. "Bret", "Leanne Graham", "Sincere@april.biz", "qui est esse" ...)</label>
 </form>`
 
 let searchForm = document.querySelector('#searchForm')
