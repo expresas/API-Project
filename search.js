@@ -57,13 +57,13 @@ albumsLinkElement.href = './albums.html'
 
 navCenterElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
 
-let searchDivElement = document.createElement('div')
-navRightElement.append(searchDivElement)
+// let searchDivElement = document.createElement('div')
+// navRightElement.append(searchDivElement)
 
-searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
-<input type="text" name="search" id="search">
-<input type="submit" value="Search">
-</form>`
+// searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
+// <input type="text" name="search" id="search">
+// <input type="submit" value="Search">
+// </form>`
 /// nav pabaiga
 
 fetch(`https://jsonplaceholder.typicode.com/users?username=${SEARCH}`)
