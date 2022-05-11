@@ -16,7 +16,7 @@ console.log('Labas search')
 // 16. Sukurti filtravimo galimybę iš dalies frazės, o nebūtinai pagal tikslią frazę.
 
 let urlParams = new URLSearchParams(document.location.search)
-const SEARCH = urlParams.get('search')
+let SEARCH = urlParams.get('search')
 console.log(SEARCH)
 
 function capitalizeFirstLetter(string) {
@@ -66,148 +66,162 @@ navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
 // </form>`
 /// nav pabaiga
 
-fetch(`https://jsonplaceholder.typicode.com/users?username=${SEARCH}`)
-.then(res => res.json())
-.then(usernames => {
-  let resultsWrapper = document.createElement('div')
-  resultsWrapper.classList.add('resultsWrapper')
-  pageWrapper.append(resultsWrapper);
+let searchDivElement = document.createElement('div')
+searchDivElement.classList.add('oneResult')
+pageWrapper.append(searchDivElement)
 
-  // console.dir(posts)
-  if (usernames.length === 0) {
-    let oneResult = document.createElement('div')
-    oneResult.classList.add('oneResult')
-    oneResult.textContent = `Username: Nieko nerasta`
-    resultsWrapper.append(oneResult)
-    // console.log('Nieko nerasta')
-  } else {
-    usernames.map(username => {
-      let oneResult = document.createElement('div')
-      oneResult.classList.add('oneResult')
-      oneResult.textContent = `Username rasta: id:${username.id} name:${username.name}`
-      // console.log('rastas user id: ' + username.id)
-      resultsWrapper.append(oneResult)
-    })
+// searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
+searchDivElement.innerHTML = `<form id="searchForm">
+<label for="search">Search phrase: </label>
+<input type="text" name="search" id="search" required>
+<input type="submit" value="Search">
+</form>`
+
+let searchForm = document.querySelector('#searchForm')
+searchForm.addEventListener('submit', event => {
+  event.preventDefault()
+  // console.dir(event.target.elements.search.value)
+  SEARCH = event.target.elements.search.value
+  if (document.querySelector('.resultsWrapper')){
+    document.querySelector('.resultsWrapper').remove()
   }
+  showSearchResults(SEARCH)
 
-  fetch(`https://jsonplaceholder.typicode.com/users?name=${SEARCH}`)
+})
+
+function showSearchResults(text) {
+  fetch(`https://jsonplaceholder.typicode.com/users?username=${SEARCH}`)
   .then(res => res.json())
-  .then(names => {
-     
-    // console.dir(posts)
-    if (names.length === 0) {
+  .then(usernames => {
+    let resultsWrapper = document.createElement('div')
+    resultsWrapper.classList.add('resultsWrapper')
+    pageWrapper.append(resultsWrapper)
+  
+    if (usernames.length === 0) {
       let oneResult = document.createElement('div')
       oneResult.classList.add('oneResult')
-      oneResult.textContent = `Name: Nieko nerasta`
+      oneResult.textContent = `Username: no results for phrase "${SEARCH}"`
       resultsWrapper.append(oneResult)
-      // console.log('Nieko nerasta')
     } else {
-      names.map(name => {
+      usernames.map(username => {
         let oneResult = document.createElement('div')
         oneResult.classList.add('oneResult')
-        oneResult.textContent = `Name rasta: id:${name.id} name:${name.name}`
-        // console.log('rastas user id: ' + username.id)
+        oneResult.innerHTML = `Username found: <span>${SEARCH}</span>, real name: <span>${username.name}</span>`
         resultsWrapper.append(oneResult)
       })
     }
-    
-    fetch(`https://jsonplaceholder.typicode.com/users?email=${SEARCH}`)
+  
+    fetch(`https://jsonplaceholder.typicode.com/users?name=${SEARCH}`)
     .then(res => res.json())
-    .then(emails => {
+    .then(names => {
        
-      // console.dir(posts)
-      if (emails.length === 0) {
+      if (names.length === 0) {
         let oneResult = document.createElement('div')
         oneResult.classList.add('oneResult')
-        oneResult.textContent = `Email: Nieko nerasta`
+        oneResult.textContent = `Name: no results for phrase "${SEARCH}"`
         resultsWrapper.append(oneResult)
-        // console.log('Nieko nerasta')
       } else {
-        emails.map(email => {
+        names.map(name => {
           let oneResult = document.createElement('div')
           oneResult.classList.add('oneResult')
-          oneResult.textContent = `Email rasta: id:${email.id} email:${email.email}`
-          // console.log('rastas user id: ' + username.id)
+          oneResult.innerHTML = `Name found: <span>${SEARCH}</span>, authors username is: <span>${name.username}</span>`
           resultsWrapper.append(oneResult)
         })
       }
-    
-      fetch(`https://jsonplaceholder.typicode.com/posts?title=${SEARCH}`)
+      
+      fetch(`https://jsonplaceholder.typicode.com/users?email=${SEARCH}`)
       .then(res => res.json())
-      .then(posts => {
+      .then(emails => {
          
-        // console.dir(posts)
-        if (posts.length === 0) {
+        if (emails.length === 0) {
           let oneResult = document.createElement('div')
           oneResult.classList.add('oneResult')
-          oneResult.textContent = `Post: Nieko nerasta`
+          oneResult.textContent = `Email: no results for phrase "${SEARCH}"`
           resultsWrapper.append(oneResult)
-          // console.log('Nieko nerasta')
         } else {
-          posts.map(post => {
+          emails.map(email => {
             let oneResult = document.createElement('div')
             oneResult.classList.add('oneResult')
-            oneResult.textContent = `Post rasta: id:${post.id} title:${post.title}`
-            // console.log('rastas user id: ' + username.id)
+            oneResult.innerHTML = `Email found: <span>${SEARCH}</span>, authors name is: <span>${email.name}</span>`
             resultsWrapper.append(oneResult)
           })
         }
-        
-        fetch(`https://jsonplaceholder.typicode.com/albums?title=${SEARCH}`)
+      
+        fetch(`https://jsonplaceholder.typicode.com/posts?title=${SEARCH}`)
         .then(res => res.json())
-        .then(albums => {
+        .then(posts => {
            
-          // console.dir(posts)
-          if (albums.length === 0) {
+          if (posts.length === 0) {
             let oneResult = document.createElement('div')
             oneResult.classList.add('oneResult')
-            oneResult.textContent = `Album: Nieko nerasta`
+            oneResult.textContent = `Post title: no results for phrase "${SEARCH}"`
             resultsWrapper.append(oneResult)
-            // console.log('Nieko nerasta')
           } else {
-            albums.map(album => {
+            posts.map(post => {
               let oneResult = document.createElement('div')
               oneResult.classList.add('oneResult')
-              oneResult.textContent = `Album rasta: id:${album.id} title:${album.title}`
-              // console.log('rastas user id: ' + username.id)
+              oneResult.innerHTML = `Post title found: <span>${capitalizeFirstLetter(SEARCH)}</span>, post: <span>" ${capitalizeFirstLetter(post.body)}"</span>.`
               resultsWrapper.append(oneResult)
             })
           }
-
-        })
-
-
-
-
+          
+          fetch(`https://jsonplaceholder.typicode.com/albums?title=${SEARCH}`)
+          .then(res => res.json())
+          .then(albums => {
+             
+            if (albums.length === 0) {
+              let oneResult = document.createElement('div')
+              oneResult.classList.add('oneResult')
+              oneResult.textContent = `Album title: no results for phrase "${SEARCH}"`
+              resultsWrapper.append(oneResult)
+            } else {
+              albums.map(album => {
+                let oneResult = document.createElement('div')
+                oneResult.classList.add('oneResult')
+                oneResult.innerHTML = `Album title found: <span>${capitalizeFirstLetter(SEARCH)}</span>`
+                resultsWrapper.append(oneResult)
+              })
+            }
+  
+          })
+  
+  
+  
+  
+        
+      })
+  
+      })
       
-    })
-
+  
+  
+  
     })
     
-
-
-
   })
+  // .catch(error => {
+  //   // pageWrapper.remove()
+  //   let errorMessage = document.createElement('h1')
+  //   errorMessage.style.color = 'white'
+  //   errorMessage.textContent = 'Nėra tokio autoriaus!'
+  //   document.body.append(errorMessage)
+  // })
   
-})
-// .catch(error => {
-//   // pageWrapper.remove()
-//   let errorMessage = document.createElement('h1')
-//   errorMessage.style.color = 'white'
-//   errorMessage.textContent = 'Nėra tokio autoriaus!'
-//   document.body.append(errorMessage)
-// })
+  // suskleidžiame komentarus(jei jie išskleisti), nes pakeitus lango dydį nebeatitinka komentarų divo aukštis
+  // window.addEventListener('resize', hideComments)
+  // function hideComments() {
+  //   let buttons = document.querySelector('.postsWrapper').querySelectorAll('input[type=button]')
+  //   buttons.forEach(button => {
+  //     if (button.value === 'Hide comments') {
+  //       button.value = 'Show comments'
+  //       button.nextElementSibling.style.visibility = 'hidden'
+  //       button.nextElementSibling.style.opacity = '0'
+  //       button.nextElementSibling.style.height = '0'
+  //     }
+  //   })
+  // }
+}
 
-// suskleidžiame komentarus(jei jie išskleisti), nes pakeitus lango dydį nebeatitinka komentarų divo aukštis
-// window.addEventListener('resize', hideComments)
-// function hideComments() {
-//   let buttons = document.querySelector('.postsWrapper').querySelectorAll('input[type=button]')
-//   buttons.forEach(button => {
-//     if (button.value === 'Hide comments') {
-//       button.value = 'Show comments'
-//       button.nextElementSibling.style.visibility = 'hidden'
-//       button.nextElementSibling.style.opacity = '0'
-//       button.nextElementSibling.style.height = '0'
-//     }
-//   })
-// }
+if (SEARCH) {
+  showSearchResults(SEARCH)
+}

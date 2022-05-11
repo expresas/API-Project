@@ -123,7 +123,7 @@ let searchDivElement = document.createElement('div')
 navRightElement.append(searchDivElement)
 
 searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
-<input type="text" name="search" id="search">
+<input type="text" name="search" id="search" required>
 <input type="submit" value="Search">
 </form>`
 /// nav pabaiga

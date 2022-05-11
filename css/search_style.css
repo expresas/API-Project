@@ -58,8 +58,8 @@ img {
   width: 80%;
   min-width: 44rem;
   margin: 0 auto;
-  display: flex;
-  gap: 1rem;
+  /* display: flex;
+  gap: 1rem; */
 }
 
 #searchForm {
@@ -69,6 +69,15 @@ img {
 
 #search {
   margin-right: 0.5rem;
+}
+
+label {
+  margin-right: 0.5rem;
+
+}
+
+span {
+  font-weight: bold;
 }
 
 .onePost,
