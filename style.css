@@ -36,6 +36,13 @@ img {
   box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15);
 }
 
+/* .oneAlbum a {
+  color: rgb(105, 30, 30);
+} */
+
+.oneAlbum h3 {
+  margin-top: 0.25rem;
+}
 
 .onePost span,
 .oneAlbum span {
