@@ -1,6 +1,5 @@
 let urlParams = new URLSearchParams(document.location.search)
 let SEARCH = urlParams.get('search').trim().toLowerCase()
-console.log(SEARCH)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
