@@ -9,6 +9,7 @@ body {
 
 .pageWrapper {
   width: 80%;
+  min-width: 44rem;
   margin: 0 auto;
   /* display: flex;
   gap: 1rem; */
