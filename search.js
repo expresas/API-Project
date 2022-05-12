@@ -1,11 +1,5 @@
-console.log('Labas search')
-
-// Papildoma:
-// 15. Search puslapyje turi būti paieškos forma, kuri veikia neperkraunant puslapio.
-// 16. Sukurti filtravimo galimybę iš dalies frazės, o nebūtinai pagal tikslią frazę.
-
 let urlParams = new URLSearchParams(document.location.search)
-let SEARCH = urlParams.get('search')
+let SEARCH = urlParams.get('search').trim().toLowerCase()
 console.log(SEARCH)
 
 function capitalizeFirstLetter(string) {
@@ -45,14 +39,6 @@ albumsLinkElement.textContent = 'Albums'
 albumsLinkElement.href = './albums.html'
 
 navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
-
-// let searchDivElement = document.createElement('div')
-// navRightElement.append(searchDivElement)
-
-// searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
-// <input type="text" name="search" id="search">
-// <input type="submit" value="Search">
-// </form>`
 /// nav pabaiga
 
 let searchDivElement = document.createElement('div')
@@ -62,128 +48,102 @@ pageWrapper.append(searchDivElement)
 searchDivElement.innerHTML = `<form id="searchForm">
 <label for="search">Search phrase: </label>
 <input type="text" name="search" id="search" required>
-<input type="submit" value="Search">&nbsp;&nbsp;
-<label>(e.g. "Bret", "Leanne Graham", "Sincere@april.biz", "qui est esse" ...)</label>
+<input type="submit" value="Search">
 </form>`
 
 let searchForm = document.querySelector('#searchForm')
 searchForm.addEventListener('submit', event => {
   event.preventDefault()
-  // console.dir(event.target.elements.search.value)
-  SEARCH = event.target.elements.search.value
+  SEARCH = event.target.elements.search.value.trim().toLowerCase()
   if (document.querySelector('.resultsWrapper')){
     document.querySelector('.resultsWrapper').remove()
   }
-  showSearchResults(SEARCH)
+  showSearchResults()
 })
 
-function showSearchResults(text) {
-  fetch(`https://jsonplaceholder.typicode.com/users?username=${SEARCH}`)
+function showSearchResults() {
+  let resultsWrapper = document.createElement('div')
+  resultsWrapper.classList.add('resultsWrapper')
+  pageWrapper.append(resultsWrapper)
+
+  fetch(`https://jsonplaceholder.typicode.com/users`)
   .then(res => res.json())
-  .then(usernames => {
-    let resultsWrapper = document.createElement('div')
-    resultsWrapper.classList.add('resultsWrapper')
-    pageWrapper.append(resultsWrapper)
-  
-    if (usernames.length === 0) {
+  .then(users => {
+    let userFound = false;
+    
+    users.map(user => {
+      let name = user.name.toLowerCase()
+      let userName = user.username.toLowerCase()
+      let emailas = user.email.toLowerCase()
+
+      if (name.includes(SEARCH) || userName.includes(SEARCH) || emailas.includes(SEARCH)) {
+        let oneResult = document.createElement('div')
+        oneResult.classList.add('oneResult')
+        oneResult.innerHTML = `Author found: <span><a href="./user.html?userId=${user.id}">${user.name}</a></span>, <span>${user.username}</span>, <span>${user.email}</span>`
+        resultsWrapper.append(oneResult)
+        userFound = true
+      } 
+    })
+
+    if (!userFound) {
       let oneResult = document.createElement('div')
       oneResult.classList.add('oneResult')
-      oneResult.textContent = `Username: no results for phrase "${SEARCH}"`
+      oneResult.innerHTML = `Authors: no results for phrase <span>${SEARCH}</span>`
       resultsWrapper.append(oneResult)
-    } else {
-      usernames.map(username => {
-        let oneResult = document.createElement('div')
-        oneResult.classList.add('oneResult')
-        oneResult.innerHTML = `Username found: <span>${SEARCH}</span>, real name: <span>${username.name}</span>`
-        resultsWrapper.append(oneResult)
-      })
     }
-  
-    fetch(`https://jsonplaceholder.typicode.com/users?name=${SEARCH}`)
+    
+    fetch(`https://jsonplaceholder.typicode.com/posts`)
     .then(res => res.json())
-    .then(names => {
-       
-      if (names.length === 0) {
-        let oneResult = document.createElement('div')
-        oneResult.classList.add('oneResult')
-        oneResult.textContent = `Name: no results for phrase "${SEARCH}"`
-        resultsWrapper.append(oneResult)
-      } else {
-        names.map(name => {
+    .then(posts => {
+      let postFound = false;
+      
+      posts.map(post => {
+        let postTitle = post.title.toLowerCase()
+  
+        if (postTitle.includes(SEARCH)) {
           let oneResult = document.createElement('div')
           oneResult.classList.add('oneResult')
-          oneResult.innerHTML = `Name found: <span>${SEARCH}</span>, authors username is: <span>${name.username}</span>`
+          oneResult.innerHTML = `Post found: <span><a href="./post.html?postId=${post.id}">${capitalizeFirstLetter(post.title)}</a></span>`
           resultsWrapper.append(oneResult)
-        })
+          postFound = true
+        } 
+      })
+  
+      if (!postFound) {
+        let oneResult = document.createElement('div')
+        oneResult.classList.add('oneResult')
+        oneResult.innerHTML = `Posts: no results for phrase <span>${SEARCH}</span>`
+        resultsWrapper.append(oneResult)
       }
       
-      fetch(`https://jsonplaceholder.typicode.com/users?email=${SEARCH}`)
+      fetch(`https://jsonplaceholder.typicode.com/albums`)
       .then(res => res.json())
-      .then(emails => {
-         
-        if (emails.length === 0) {
+      .then(albums => {
+        let albumFound = false;
+        
+        albums.map(album => {
+          let albumTitle = album.title.toLowerCase()
+    
+          if (albumTitle.includes(SEARCH)) {
+            let oneResult = document.createElement('div')
+            oneResult.classList.add('oneResult')
+            oneResult.innerHTML = `Album found: <span><a href="./album.html?albumId=${album.id}">${capitalizeFirstLetter(album.title)}</a></span>`
+            resultsWrapper.append(oneResult)
+            albumFound = true
+          } 
+        })
+    
+        if (!albumFound) {
           let oneResult = document.createElement('div')
           oneResult.classList.add('oneResult')
-          oneResult.textContent = `Email: no results for phrase "${SEARCH}"`
+          oneResult.innerHTML = `Albums: no results for phrase <span>${SEARCH}</span>`
           resultsWrapper.append(oneResult)
-        } else {
-          emails.map(email => {
-            let oneResult = document.createElement('div')
-            oneResult.classList.add('oneResult')
-            oneResult.innerHTML = `Email found: <span>${SEARCH}</span>, authors name is: <span>${email.name}</span>`
-            resultsWrapper.append(oneResult)
-          })
         }
-      
-        fetch(`https://jsonplaceholder.typicode.com/posts?title=${SEARCH}`)
-        .then(res => res.json())
-        .then(posts => {
-           
-          if (posts.length === 0) {
-            let oneResult = document.createElement('div')
-            oneResult.classList.add('oneResult')
-            oneResult.textContent = `Post title: no results for phrase "${SEARCH}"`
-            resultsWrapper.append(oneResult)
-          } else {
-            posts.map(post => {
-              let oneResult = document.createElement('div')
-              oneResult.classList.add('oneResult')
-              oneResult.innerHTML = `Post title found: <span>${capitalizeFirstLetter(SEARCH)}</span>, post: <span>" ${capitalizeFirstLetter(post.body)}"</span>.`
-              resultsWrapper.append(oneResult)
-            })
-          }
-          
-          fetch(`https://jsonplaceholder.typicode.com/albums?title=${SEARCH}`)
-          .then(res => res.json())
-          .then(albums => {
-             
-            if (albums.length === 0) {
-              let oneResult = document.createElement('div')
-              oneResult.classList.add('oneResult')
-              oneResult.textContent = `Album title: no results for phrase "${SEARCH}"`
-              resultsWrapper.append(oneResult)
-            } else {
-              albums.map(album => {
-                let oneResult = document.createElement('div')
-                oneResult.classList.add('oneResult')
-                oneResult.innerHTML = `Album title found: <span>${capitalizeFirstLetter(SEARCH)}</span>`
-                resultsWrapper.append(oneResult)
-              })
-            }
-          })
-      })
       })
     })
   })
-  // .catch(error => {
-  //   // pageWrapper.remove()
-  //   let errorMessage = document.createElement('h1')
-  //   errorMessage.style.color = 'white'
-  //   errorMessage.textContent = 'Nėra tokio autoriaus!'
-  //   document.body.append(errorMessage)
-  // })
 }
 
 if (SEARCH) {
-  showSearchResults(SEARCH)
+  showSearchResults()
 }
