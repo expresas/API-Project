@@ -1,21 +1,5 @@
-console.log('Labas user')
-
-// 3. Sukurti naują puslapį user.html, kuriame bus atvaizduojama vartotojo informacija:
-// 3.1. Pilnas vardas.
-// 3.2. Vartotojo vardas / nick'as.
-// 3.3. El. paštas.
-// 3.4. Adresas, kuris turės gatvę, namo numerį, miestą, pašto kodą. Paspaudus ant adreso, pagal koordinates, turėtų atidaryti šios vietos Google Maps. Kol kas naudoti bet kokią Google Map vietovę.
-// 3.5. Telefono numeris.
-// 3.6. Internetinio puslapio adresas.
-// 3.7. Įmonės, kurioje dirba, pavadinimas.
-
-// 4. Šiame puslapyje turės būti atvaizduojama:
-// 4.1. Visi vartotojo parašyti įrašai (posts). Post'ų įrašuose nereikia atvaizduoti komentarų. Kiekvienas post'as turi turėti nuorodą.
-// 4.2. Visi vartotojo sukurti foto albumai. Kiekvienas albumas turės:
-// 4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.
 let urlParams = new URLSearchParams(document.location.search);
 const USERID = urlParams.get('userId')
-// console.log(USERID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -88,7 +72,6 @@ fetch(`https://jsonplaceholder.typicode.com/users/${USERID}`)
   document.body.append(userWrapper)
   userWrapper.append(userInfoElement)
   userInfoElement.append(nameElement, usernameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement)
-  // console.log(author)
     
   fetch(`https://jsonplaceholder.typicode.com/posts?userId=${USERID}`)
   .then(res => res.json())
@@ -106,12 +89,8 @@ fetch(`https://jsonplaceholder.typicode.com/users/${USERID}`)
       userPostsElement.append(userPostElement)
   
       let userPostTitle = document.createElement('h4')
-      // let userPostBody = document.createElement('p')
-      // userPostElement.append(userPostTitle, userPostBody)
       userPostElement.append(userPostTitle)
       userPostTitle.innerHTML = `<a href="./post.html?postId=${post.id}">${capitalizeFirstLetter(post.title)}</a>`
-      // userPostBody.textContent = capitalizeFirstLetter(post.body)
-      // console.log('postas', post)
     })
 
     fetch(`https://jsonplaceholder.typicode.com/albums?userId=${USERID}`)
@@ -132,7 +111,6 @@ fetch(`https://jsonplaceholder.typicode.com/users/${USERID}`)
         let userAlbumTitle = document.createElement('h4')
         userAlbumElement.append(userAlbumTitle)
         userAlbumTitle.innerHTML = `<a href="./album.html?albumId=${album.id}">${capitalizeFirstLetter(album.title)}</a>`
-        // console.log(album)
       })
     })
   })

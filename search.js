@@ -1,16 +1,5 @@
 console.log('Labas search')
 
-// 11. Navigacijos elemente sukurti paieškos laukelį (formą ir text input).
-// 12. Formos submit metu, nukreipti į naują puslapį (search.html).
-// 13. Šiame puslapyje atvaizduoti paieškos rezultatą.
-// 13.1. Jeigu nėra tinkamų rezultatų, tai parašyti, jog rezultatų pagal užklausą nerasta.
-// 14. Filtruoti pagal:
-// 14.1. Tikslų vartotojo username.
-// 14.2. Jeigu neranda pagal username, tada pagal tikslų vartotojo pilną vardą.
-// 14.3. Jeigu neranda pagal username arba pagal tikslu vartotojo pilna vardą, tada pagal tikslų vartotojo el. paštą.
-// 14.4. Tikslų post'o pavadinimą.
-// 14.5. Tikslų albumo pavadinimą.
-
 // Papildoma:
 // 15. Search puslapyje turi būti paieškos forma, kuri veikia neperkraunant puslapio.
 // 16. Sukurti filtravimo galimybę iš dalies frazės, o nebūtinai pagal tikslią frazę.
@@ -70,7 +59,6 @@ let searchDivElement = document.createElement('div')
 searchDivElement.classList.add('oneResult')
 pageWrapper.append(searchDivElement)
 
-// searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
 searchDivElement.innerHTML = `<form id="searchForm">
 <label for="search">Search phrase: </label>
 <input type="text" name="search" id="search" required>
@@ -182,22 +170,10 @@ function showSearchResults(text) {
                 resultsWrapper.append(oneResult)
               })
             }
-  
           })
-  
-  
-  
-  
-        
       })
-  
       })
-      
-  
-  
-  
     })
-    
   })
   // .catch(error => {
   //   // pageWrapper.remove()
@@ -206,20 +182,6 @@ function showSearchResults(text) {
   //   errorMessage.textContent = 'Nėra tokio autoriaus!'
   //   document.body.append(errorMessage)
   // })
-  
-  // suskleidžiame komentarus(jei jie išskleisti), nes pakeitus lango dydį nebeatitinka komentarų divo aukštis
-  // window.addEventListener('resize', hideComments)
-  // function hideComments() {
-  //   let buttons = document.querySelector('.postsWrapper').querySelectorAll('input[type=button]')
-  //   buttons.forEach(button => {
-  //     if (button.value === 'Hide comments') {
-  //       button.value = 'Show comments'
-  //       button.nextElementSibling.style.visibility = 'hidden'
-  //       button.nextElementSibling.style.opacity = '0'
-  //       button.nextElementSibling.style.height = '0'
-  //     }
-  //   })
-  // }
 }
 
 if (SEARCH) {
