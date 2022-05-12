@@ -107,9 +107,11 @@ img {
 /* navigacija */
 .navWrapper {
   width: 80%;
+  min-width: 44rem;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   /* gap: 1rem; */
   padding: 0.75rem;
   /* border: 1px solid black; */
@@ -131,6 +133,10 @@ img {
   text-decoration: underline;
 }
 
+.navCenter a {
+  margin-left: 1rem;
+}
+
 .navRight a {
   margin-left: 1rem;
 }
@@ -138,5 +144,14 @@ img {
 .navWrapper:hover {
   -webkit-box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15); 
   box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15);
+}
+
+#searchForm {
+  display: flex;
+  align-items: center;
+}
+
+#search {
+  margin-right: 0.5rem;
 }
 /* nav pabaiga */

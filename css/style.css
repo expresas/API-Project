@@ -52,15 +52,6 @@ img {
   -webkit-box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15); 
   box-shadow: inset 0px 0px 50px 2px rgba(105, 30, 30,0.15);
 }
-/* nav pabaiga */
-
-.pageWrapper {
-  width: 80%;
-  min-width: 44rem;
-  margin: 0 auto;
-  display: flex;
-  gap: 1rem;
-}
 
 #searchForm {
   display: flex;
@@ -69,6 +60,15 @@ img {
 
 #search {
   margin-right: 0.5rem;
+}
+/* nav pabaiga */
+
+.pageWrapper {
+  width: 80%;
+  min-width: 44rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
 }
 
 .onePost,

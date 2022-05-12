@@ -12,16 +12,19 @@ function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
 }
 
-// navigacija
+// navigation start
 let navWrapper = document.createElement('div')
 navWrapper.classList.add('navWrapper')
 document.body.prepend(navWrapper)
 
 let navLeftElement = document.createElement('div')
 navLeftElement.classList.add('navLeft')
+let navCenterElement = document.createElement('div')
+navCenterElement.classList.add('navCenter')
 let navRightElement = document.createElement('div')
 navRightElement.classList.add('navRight')
-navWrapper.append(navLeftElement, navRightElement)
+
+navWrapper.append(navLeftElement, navCenterElement, navRightElement)
 let homeLinkElement = document.createElement('a')
 homeLinkElement.textContent = 'Home'
 homeLinkElement.href = './'
@@ -37,8 +40,16 @@ let albumsLinkElement = document.createElement('a')
 albumsLinkElement.textContent = 'Albums'
 albumsLinkElement.href = './albums.html'
 
-navRightElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
-/// nav pabaiga
+navCenterElement.append(authorsLinkElement, postsLinkElement, albumsLinkElement)
+
+let searchDivElement = document.createElement('div')
+navRightElement.append(searchDivElement)
+
+searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
+<input type="text" name="search" id="search" required>
+<input type="submit" value="Search">
+</form>`
+// navigation end
 
 fetch(`https://jsonplaceholder.typicode.com/users`)
 .then(res => res.json())
