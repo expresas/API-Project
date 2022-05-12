@@ -1,6 +1,5 @@
 let urlParams = new URLSearchParams(document.location.search)
 const USERID = urlParams.get('userId')
-console.log(USERID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)

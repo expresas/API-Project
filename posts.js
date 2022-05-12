@@ -1,6 +1,5 @@
 let urlParams = new URLSearchParams(document.location.search)
 const USERID = urlParams.get('userId')
-console.log(USERID)
 
 function capitalizeFirstLetter(string) {
   return string.at(0).toUpperCase() + string.slice(1)
@@ -59,7 +58,6 @@ if (USERID) {
 fetch(url)
 .then(res => res.json())
 .then(posts => {
-  console.dir(posts)
   if (posts.length === 0) return error
   let postsWrapper = document.createElement('div')
   postsWrapper.classList.add('postsWrapper')

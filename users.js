@@ -47,7 +47,6 @@ searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
 fetch(`https://jsonplaceholder.typicode.com/users`)
 .then(res => res.json())
 .then(authors => {
-  console.log(authors)
   let userWrapper = document.createElement('div');
   userWrapper.classList.add('userWrapper')
     
