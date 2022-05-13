@@ -51,7 +51,6 @@ searchDivElement.innerHTML = `<form id="searchForm" action="./search.html">
 fetch(`https://jsonplaceholder.typicode.com/posts/${POSTID}`)
 .then(res => res.json())
 .then(post => {
-  console.log(post)
   let postsWrapper = document.createElement('div')
   postsWrapper.classList.add('postsWrapper')
   pageWrapper.append(postsWrapper);
